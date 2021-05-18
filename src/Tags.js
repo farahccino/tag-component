@@ -15,38 +15,46 @@ export default function Tags({ tags, onUpdateTags, onDeleteTag }) {
       setTag(''); 
     }
     else if (tag.length === 0 && event.key === 'Backspace') {
-        onDeleteTag(tags[tags.length - 1])
+        onDeleteTag(tags.pop()); //alternativ:  (tags[tags.length - 1])
     }
   }
 
   return (
+   <>
+    <Label htmlFor="tag">Player Skills</Label>
     <Tag>
-      <label htmlFor="tag">Player Skills</label>
-      
       <TagCloud>
         {tags.map((tag, index) => (
           <span key={index + tag}>{tag}
-          <Button onClick={() => onDeleteTag(tag)}>X</Button> 
-          </span>
-          
+          <Button onClick={() => onDeleteTag(tag)}>X</Button> {' '}
+          </span>   
         ))}
         <input
         type="text"
+        placeholder="Write here..."
         name="tag"
         value={tag}
         onChange={handleChange}
-        onKeyDown={handleKeyDown}
+        onKeyDown={handleKeyDown} //soll nur passieren wenn enter gedrückt wird
       />
       </TagCloud>
     </Tag>
+    </>
   );
 }
 
+const Label = styled.label`
+display: block;
+font-weight: bold;
+font-family: sans-serif;
+font-size: 1.5rem;
+margin-bottom: 0.5rem;
+`
 
 const Button = styled.button`
 border: none;
 background: none;
-color: hotpink;
+color: hsla(357, 77%, 39%, 0.75);
 cursor: pointer;
 `
 
@@ -61,7 +69,7 @@ const Tag = styled.section`
 
   span {
     margin: 0.2rem;
-    background: limegreen;
+    background: hsla(156, 77%, 39%, 0.75);
     color: ivory;
     padding: 0.3rem;
     border-radius: 0.3rem;
